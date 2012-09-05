@@ -82,6 +82,53 @@ LRESULT WINAPI WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 			TextOut(hdc, rect.right/2, rect.bottom/2, &ch, 1);
 			EndPaint(hwnd, &ps);
 			return 0;
+		case WM_KEYDOWN:							// Uma tecla foi pressionada
+			vkKeys[wParam] = true;
+			switch (wParam) {
+				case VK_SHIFT:
+					nVirtKey = GetKeyState(VK_LSHIFT);	// Ganha o status de um left shift
+					if (nVirtKey & SHIFTED)
+						vkKeys[VK_LSHIFT] = true;
+				
+					nVirtKey = GetKeyState(VK_RSHIFT);
+					if (nVirtKey & SHIFTED)
+						VkKeyScan[VK_RSHIFT] = true;
+					break;
+				case VK_CONTROL:
+					nVirtKey = GetKeyState(VK_LCONTROL);
+					if (nVirtKey & SHIFTED)
+						vkKeys[VK_LCONTROL] = true;
+					nVirtKey = GetKeyState(VK_RCONTROL);
+					if (nVirtKey & SHIFTED)
+						vkKeys[VK_RCONTROL] = true;
+					break;
+			}
+			InvalidateRect(hwnd, NULL, TRUE);
+			return 0;
+			break;
+		case WM_KEYUP:								// A tecla foi solta
+			vkKeys[wParam] = false;
+			switch (wParam) {
+				case VK_SHIFT:
+					nVirtKey = GetKeyState(VK_LSHIFT);
+					if ((nVirtKey & SHIFTED) == 0)
+						vkKeys[VK_LSHIFT] = false;
+					nVirtKey = GetKeyState(VK_RSHIFT);
+					if ((nVirtKey & SHIFTED) == 0)
+						vkKeys[VK_RSHIFT] = false;
+					break;
+				case VK_CONTROL:
+					nVirtKey = GetKeyState(VK_LCONTROL);
+					if ((nVirtKey & SHIFTED) == 0)
+						vkKeys[VK_LCONTROL] = false;
+					nVirtKey = GetKeyState(VK_RCONTROL);
+					if ((nVirtKey & SHIFTED) == 0)
+						vkKeys[VK_RCONTROL] = false;
+					break;
+			}
+			InvalidateRect(hwnd, NULL, TRUE);
+			return 0;
+			break;
 		default:
 			return DefWindowProc(hwnd, msg, wParam, lParam);
 	}
