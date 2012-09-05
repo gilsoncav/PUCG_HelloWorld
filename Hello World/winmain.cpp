@@ -4,13 +4,17 @@
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int);
 bool CreateMainWindow(HINSTANCE, int);
 LRESULT WINAPI WinProc(HWND, UINT, WPARAM, LPARAM);
-// Variavel global
-HINSTANCE hinst;
+// Variaveis globais
+HINSTANCE hinst;		// Handle para a instancia da app
+HDC hdc;				// Handle para a o Device Context
+TCHAR ch = ' ';			// Character entered
+RECT rect;				// struct para um Retangulo
+PAINTSTRUCT ps;			// usado no WM_PAINT
 // Constantes
 const char CLASS_NAME[] = "WinMain";
 const char APP_TITLE[] = "Hello World"; // Titulo da barra de texto da janela
-const int WINDOW_WIDTH = 400;
-const int WINDOW_HEIGHT = 400;
+const int WINDOW_WIDTH = 400;		// Largura da janela
+const int WINDOW_HEIGHT = 400;		// Altura da janela
 
 /************************************************************************
  * Ponto inicial para uma aplicacao Windows
@@ -51,15 +55,36 @@ int WINAPI WinMain( HINSTANCE hInstance,
  * 
  * Gilson Cavalcanti - gilson@blackmuppet.com
  ************************************************************************/
-LRESULT WINAPI WinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+LRESULT WINAPI WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	switch (msg) {
-	case WM_DESTROY:
-		// Dizer ao Windows para matar este app
-		PostQuitMessage(0);
-		return 0;
-		break;
+		case WM_DESTROY:
+			// Dizer ao Windows para matar este app
+			PostQuitMessage(0);
+			return 0;
+		case WM_CHAR:
+			switch (wParam) {
+				case 0x08:			// Backspace
+				case 0x09:			// Tab
+				case 0x0A:			// Linefeed
+				case 0x0D:			// Carriage return
+				case 0x1B:			// Escape
+					MessageBeep((UINT) -1);		// Faz um som, mas não mostra nada
+					return 0;
+				default:		// Caso seja um caractere mostravel (nao invisivel)
+					ch = (TCHAR) wParam;		// Pega o caractere
+					InvalidateRect(hwnd, NULL, TRUE);  // Force WM_PAINT
+					return 0;
+			}
+		case WM_PAINT:   // A janela precisa de redesenhar
+			hdc = BeginPaint(hwnd, &ps);	// Pega o Handle do Device Context
+			GetClientRect(hwnd, &rect);		// Pega o retangulo equivalente a janela
+			// Mostrando o carctere digitado
+			TextOut(hdc, rect.right/2, rect.bottom/2, &ch, 1);
+			EndPaint(hwnd, &ps);
+			return 0;
+		default:
+			return DefWindowProc(hwnd, msg, wParam, lParam);
 	}
-	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
 /************************************************************************
