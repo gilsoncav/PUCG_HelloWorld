@@ -10,11 +10,30 @@ HDC hdc;				// Handle para a o Device Context
 TCHAR ch = ' ';			// Character entered
 RECT rect;				// struct para um Retangulo
 PAINTSTRUCT ps;			// usado no WM_PAINT
+bool vkKeys[256];
+
 // Constantes
 const char CLASS_NAME[] = "WinMain";
 const char APP_TITLE[] = "Hello World"; // Titulo da barra de texto da janela
 const int WINDOW_WIDTH = 400;		// Largura da janela
 const int WINDOW_HEIGHT = 400;		// Altura da janela
+
+
+/************************************************************************
+ * Funcao auxiliar para verificar se ha uma outra instancia da aplicacao
+ * rodando
+ * 
+ * Gilson Cavalcanti - gilson@blackmuppet.com
+ ************************************************************************/
+bool OutraInstancia() {
+	HANDLE ourMutex;
+	// Tenta criar um Mutex com uma string unica
+	ourMutex = CreateMutex(NULL, true, "pucg_string_unica_mutex_5647389-7474749");
+	if (GetLastError() == ERROR_ALREADY_EXISTS)
+		return true;    // Ja existe uma outra instancia
+	return false;		// Somos a unica instancia
+	
+}
 
 /************************************************************************
  * Ponto inicial para uma aplicacao Windows
@@ -31,9 +50,15 @@ int WINAPI WinMain( HINSTANCE hInstance,
 					LPSTR lpCmdLine,
 					int nCmdShow) {
 	MSG msg;
+
+	// Verifica se ja existe uma outra instancia desta aplicacao
+	if (OutraInstancia())
+		return false;
+
 	// Cria a janela 
 	if (!CreateMainWindow(hInstance, nCmdShow))
 		return false;
+
 	// Main message loop
 	int done = 0;
 	while (!done) {
@@ -56,6 +81,9 @@ int WINAPI WinMain( HINSTANCE hInstance,
  * Gilson Cavalcanti - gilson@blackmuppet.com
  ************************************************************************/
 LRESULT WINAPI WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+	short nVirtKey;			// Codigo da Virtual key
+	const short SHIFTED = (short) 0x8000;
+
 	switch (msg) {
 		case WM_DESTROY:
 			// Dizer ao Windows para matar este app
@@ -92,7 +120,7 @@ LRESULT WINAPI WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 				
 					nVirtKey = GetKeyState(VK_RSHIFT);
 					if (nVirtKey & SHIFTED)
-						VkKeyScan[VK_RSHIFT] = true;
+						vkKeys[VK_RSHIFT] = true;
 					break;
 				case VK_CONTROL:
 					nVirtKey = GetKeyState(VK_LCONTROL);
@@ -183,3 +211,4 @@ bool CreateMainWindow(HINSTANCE hInstance, int nCmdShow) {
 	UpdateWindow(hwnd);
 	return true;
 }
+

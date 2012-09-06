@@ -3,16 +3,38 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Hello World", "Hello World\Hello World.vcxproj", "{996477EB-85C2-4419-974D-01E7FEC715ED}"
 EndProject
+Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "ModelingProject1", "ModelingProject1\ModelingProject1.modelproj", "{9584BD3B-EDF9-4836-913D-7AC9CFF1CE4A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
 		Debug|Win32 = Debug|Win32
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{996477EB-85C2-4419-974D-01E7FEC715ED}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{996477EB-85C2-4419-974D-01E7FEC715ED}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{996477EB-85C2-4419-974D-01E7FEC715ED}.Debug|Mixed Platforms.Build.0 = Debug|Win32
 		{996477EB-85C2-4419-974D-01E7FEC715ED}.Debug|Win32.ActiveCfg = Debug|Win32
 		{996477EB-85C2-4419-974D-01E7FEC715ED}.Debug|Win32.Build.0 = Debug|Win32
+		{996477EB-85C2-4419-974D-01E7FEC715ED}.Release|Any CPU.ActiveCfg = Release|Win32
+		{996477EB-85C2-4419-974D-01E7FEC715ED}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{996477EB-85C2-4419-974D-01E7FEC715ED}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{996477EB-85C2-4419-974D-01E7FEC715ED}.Release|Win32.ActiveCfg = Release|Win32
 		{996477EB-85C2-4419-974D-01E7FEC715ED}.Release|Win32.Build.0 = Release|Win32
+		{9584BD3B-EDF9-4836-913D-7AC9CFF1CE4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9584BD3B-EDF9-4836-913D-7AC9CFF1CE4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9584BD3B-EDF9-4836-913D-7AC9CFF1CE4A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9584BD3B-EDF9-4836-913D-7AC9CFF1CE4A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9584BD3B-EDF9-4836-913D-7AC9CFF1CE4A}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{9584BD3B-EDF9-4836-913D-7AC9CFF1CE4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9584BD3B-EDF9-4836-913D-7AC9CFF1CE4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9584BD3B-EDF9-4836-913D-7AC9CFF1CE4A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9584BD3B-EDF9-4836-913D-7AC9CFF1CE4A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{9584BD3B-EDF9-4836-913D-7AC9CFF1CE4A}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
